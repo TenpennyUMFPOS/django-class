@@ -6,3 +6,4 @@ admin.site.register(Contract)
 admin.site.register(Skill)
 admin.site.register(Industry)
 admin.site.register(Candidate)
+
