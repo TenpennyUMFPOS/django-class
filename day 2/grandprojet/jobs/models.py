@@ -1,9 +1,8 @@
 from django.db import models
 
-# 2) Modèles complémentaires
 
 class Contract(models.Model):
-    type_code = models.CharField(max_length=10)  # ex: FT
+    type_code = models.CharField(max_length=10)  
     description = models.CharField(max_length=255)
 
     def __str__(self):
