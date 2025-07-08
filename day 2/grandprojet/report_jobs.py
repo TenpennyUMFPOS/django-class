@@ -1,17 +1,17 @@
 import os
 import django
 
-# Step 1: Setup Django
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'grandprojet.settings')
 django.setup()
 
-# Step 2: Now import models and ORM tools
+
 from jobs.models import JobRecord
 from django.db.models import Avg, Count
 
 output = []
 
-# 1. Top 5 Highest Paying Job Titles (by average USD salary)
+
 output.append(" Top 5 Highest Paying Job Titles (by avg USD salary):")
 top_jobs = (
     JobRecord.objects
@@ -22,7 +22,7 @@ top_jobs = (
 for job in top_jobs:
     output.append(f"  {job['job_title']}: ${int(job['avg_salary']):,}")
 
-# 2. Average Salary by Experience Level
+
 output.append("\n Average Salary by Experience Level:")
 avg_by_exp = (
     JobRecord.objects
@@ -33,7 +33,6 @@ avg_by_exp = (
 for row in avg_by_exp:
     output.append(f"  {row['experience_level']}: ${int(row['avg_salary']):,}")
 
-# 3. Number of Jobs by Company Location
 output.append("\n Number of Jobs by Company Location:")
 jobs_by_loc = (
     JobRecord.objects
@@ -44,13 +43,13 @@ jobs_by_loc = (
 for row in jobs_by_loc:
     output.append(f"  {row['company_location']}: {row['total']} jobs")
 
-# 4. Ratio of 100% Remote Jobs
+
 total_jobs = JobRecord.objects.count()
 remote_jobs = JobRecord.objects.filter(remote_ratio=100).count()
 ratio = (remote_jobs / total_jobs * 100) if total_jobs else 0
 output.append(f"\n Ratio of Fully Remote Jobs: {remote_jobs}/{total_jobs} ({ratio:.2f}%)")
 
-# Step 3: Write to job_report.txt and print to console
+
 with open("job_report.txt", "w", encoding="utf-8") as f:
     for line in output:
         print(line)
