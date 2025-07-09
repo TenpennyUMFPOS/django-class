@@ -1,0 +1,22 @@
+{% extends "feedback/base.html" %}
+
+{% block title %}Feedback for {{ job.job_title }}{% endblock %}
+
+{% block content %}
+<h1>Feedback for "{{ job.job_title }}"</h1>
+
+<p><strong>Average Rating:</strong> {{ moyenne }} ★</p>
+
+<ul>
+    {% for feedback in feedbacks %}
+    <li>
+        <strong>{{ feedback.rating }}★</strong> - {{ feedback.comment }}
+    </li>
+    {% empty %}
+    <li>No feedback yet.</li>
+    {% endfor %}
+</ul>
+
+<p><a href="{% url 'add_feedback' job.id %}">Leave Feedback</a></p>
+<p><a href="/admin/jobs/jobrecord/{{ job.id }}/change/">← Back to JobRecord</a></p>
+{% endblock %}
