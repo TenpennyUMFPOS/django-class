@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, filters
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from .models import JobRecord, Contract, Skill, Industry, Candidate
@@ -14,6 +14,10 @@ class JobRecordViewSet(viewsets.ModelViewSet):
     queryset = JobRecord.objects.all()
     serializer_class = JobRecordSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['job_title', 'employee_residence']
+    ordering_fields = ['salary_in_usd', 'created_at']
 
 class ContractViewSet(viewsets.ModelViewSet):
     queryset = Contract.objects.all()
