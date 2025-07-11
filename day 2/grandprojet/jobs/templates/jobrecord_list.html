@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Job Records</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 40px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        li {
+            background-color: #ffffff;
+            margin-bottom: 15px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.2s ease;
+        }
+
+        li:hover {
+            background-color: #f0f0f0;
+        }
+
+        strong {
+            color: #2c3e50;
+            font-size: 18px;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+            font-size: 16px;
+        }
+
+        .pagination a {
+            margin: 0 10px;
+            text-decoration: none;
+            color: #3498db;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .pagination a:hover {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        .pagination span {
+            margin: 0 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Job Records</h1>
+
+    <ul>
+        {% for job in page_obj %}
+        <li>
+            <strong>{{ job.job_title }}</strong><br>
+            {{ job.employee_residence }}<br>
+            <span>${{ job.salary_in_usd }}</span>
+        </li>
+        {% empty %}
+        <li>No job records found.</li>
+        {% endfor %}
+    </ul>
+
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">« Previous</a>
+        {% endif %}
+
+        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Next »</a>
+        {% endif %}
+    </div>
+</body>
+
+</html>

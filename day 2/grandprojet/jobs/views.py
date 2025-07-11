@@ -1,5 +1,7 @@
+from django.shortcuts import render
 from rest_framework import viewsets, filters
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from django.core.paginator import Paginator
 
 from .models import JobRecord, Contract, Skill, Industry, Candidate
 from .serializers import (
@@ -38,3 +40,17 @@ class CandidateViewSet(viewsets.ModelViewSet):
     queryset = Candidate.objects.all()
     serializer_class = CandidateSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+
+def jobrecord_list(request):
+
+    jobrecords = JobRecord.objects.all().order_by('-id')
+    
+
+    paginator = Paginator(jobrecords, 10)
+
+    
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+  
+    return render(request, 'jobrecord_list.html', {'page_obj': page_obj})

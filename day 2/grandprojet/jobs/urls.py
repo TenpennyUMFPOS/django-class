@@ -5,8 +5,10 @@ from .views import (
     ContractViewSet,
     SkillViewSet,
     IndustryViewSet,
-    CandidateViewSet
+    CandidateViewSet,
+    jobrecord_list
 )
+
 
 router = DefaultRouter()
 router.register(r'jobs', JobRecordViewSet)
@@ -17,4 +19,6 @@ router.register(r'candidates', CandidateViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('jobrecords/', jobrecord_list, name='jobrecord_list'),
+    
 ]
